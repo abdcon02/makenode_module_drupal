@@ -1,0 +1,27 @@
+<?php
+/**
+  * Implement hook_enable()
+  *
+  */
+function makemynode_enable() {
+    drupal_set_message($message = t('The module was successfully enabled.'), $type = 'status');
+    $node = new stdClass();
+    $node->type = "page";
+    $node->title = "Tupac is alive";
+    $node->language = LANGUAGE_NONE;
+    $node->path = array('alias' => 'whatever');
+    node_object_prepare($node);
+    $node->uid = 1;
+    $node->body[$node->language][0]['value'] = 'This is a body text';
+    $node->body[$node->language][0]['summary'] = 'Here goes a summary';
+    $node->body[$node->language][0]['format'] = 'filtered_html';
+    $node = node_submit($node);
+    node_save($node);
+}
+
+function makemynode_disable() {
+    $nodes = node_load_multiple(array(), array('title' => 'Tupac is alive'));
+    foreach($nodes as $node) {
+        node_delete($node->nid);
+    }
+}

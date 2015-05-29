@@ -1,0 +1,5 @@
+name = makemynode
+description = some node doohicky
+package = epicodus examples
+core = 7.x
+files[] = makemynode.module
